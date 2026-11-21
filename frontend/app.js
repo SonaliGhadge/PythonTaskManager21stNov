@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:5000/api/tasks";
+const API_URL = "http://127.0.0.1:5000/api/task";
 
 const elements = {
   formSection: document.getElementById("taskFormSection"),
@@ -77,7 +77,7 @@ async function loadTasks() {
 function openForm() { elements.formSection.classList.remove("hidden"); document.getElementById("title").focus(); }
 function closeForm() { elements.formSection.classList.add("hidden"); elements.form.reset(); }
 
-document.getElementById("showFormButton").addEventListener("click", openForm);
+document.getElementById("showFormButton").addEventListener("click", openForm;
 document.getElementById("closeFormButton").addEventListener("click", closeForm);
 document.getElementById("cancelFormButton").addEventListener("click", closeForm);
 document.getElementById("refreshButton").addEventListener("click", loadTasks);

@@ -44,7 +44,7 @@ def create_task():
     task = Task(
         title=payload["title"].strip(),
         description=payload.get("description", "").strip(),
-        status=payload.get("status", "pending"),
+        status="pending",
     )
 
     try:
