@@ -32,4 +32,3 @@ def reset_db(database_path=None):
     path = Path(database_path) if database_path else DATABASE_PATH
     with sqlite3.connect(path) as connection:
         connection.execute("DROP TABLE IF EXISTS tasks")
-    init_db(path)
