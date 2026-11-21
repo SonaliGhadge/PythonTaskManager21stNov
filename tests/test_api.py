@@ -7,7 +7,7 @@ BACKEND_DIR = Path(__file__).resolve().parents[1] / "backend"
 sys.path.insert(0, str(BACKEND_DIR))
 
 from app import app
-from database import reset_db
+from database import get_connection, reset_db
 
 
 @pytest.fixture(autouse=True)
@@ -72,6 +72,32 @@ def test_delete_task(client):
 
     tasks = client.get("/api/tasks").get_json()
     assert all(task["id"] != task_id for task in tasks)
+
+
+def test_create_preserves_requested_status(client):
+    response = client.post("/api/tasks", json={
+        "title": "Completed immediately",
+        "status": "completed",
+    })
+    assert response.status_code == 201
+    assert response.get_json()["status"] == "completed"
+
+
+def test_title_length_limit(client):
+    at_limit = client.post("/api/tasks", json={"title": "A" * 120})
+    assert at_limit.status_code == 201
+
+    over_limit = client.post("/api/tasks", json={"title": "A" * 121})
+    assert over_limit.status_code == 400
+
+
+def test_reset_db_recreates_tasks_table():
+    reset_db()
+    with get_connection() as connection:
+        row = connection.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='tasks'"
+        ).fetchone()
+    assert row is not None
 
 
 def test_create_requires_title(client):

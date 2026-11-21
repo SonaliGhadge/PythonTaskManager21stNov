@@ -84,3 +84,7 @@
 - **Expected application behavior:** Tests should prove status preservation and title length validation.
 - **Actual behavior:** The injected logical and validation bugs remain undetected.
 - **Recommended correction:** Add boundary tests for 120/121-character titles and create-task tests for `completed` or `in_progress` statuses.
+
+## Resolution Summary
+
+All identified findings were corrected in the application and regression coverage was added for the affected status, title-length, and database-reset behavior.

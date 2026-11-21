@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:5000/api/task";
+const API_URL = "http://127.0.0.1:5000/api/tasks";
 
 const elements = {
   formSection: document.getElementById("taskFormSection"),
@@ -29,10 +29,12 @@ async function apiRequest(url, options = {}) {
 }
 
 function escapeHtml(value) {
-  const node = document.createTextNode(value == null ? "" : String(value));
-  const span = document.createElement("span");
-  span.appendChild(node);
-  return span.innerHTML;
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function renderStats(tasks) {
@@ -77,7 +79,7 @@ async function loadTasks() {
 function openForm() { elements.formSection.classList.remove("hidden"); document.getElementById("title").focus(); }
 function closeForm() { elements.formSection.classList.add("hidden"); elements.form.reset(); }
 
-document.getElementById("showFormButton").addEventListener("click", openForm;
+document.getElementById("showFormButton").addEventListener("click", openForm);
 document.getElementById("closeFormButton").addEventListener("click", closeForm);
 document.getElementById("cancelFormButton").addEventListener("click", closeForm);
 document.getElementById("refreshButton").addEventListener("click", loadTasks);

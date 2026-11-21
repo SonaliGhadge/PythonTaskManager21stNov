@@ -41,8 +41,8 @@ def validate_task_payload(payload, creating=False):
     if "title" in payload:
         if not isinstance(payload["title"], str) or not payload["title"].strip():
             raise ValueError("Title must be a non-empty string")
-        if len(payload["title"].strip()) > 121:
-            raise ValueError("Title must be 121 characters or fewer")
+        if len(payload["title"].strip()) > 120:
+            raise ValueError("Title must be 120 characters or fewer")
 
     if "description" in payload:
         if not isinstance(payload["description"], str):
